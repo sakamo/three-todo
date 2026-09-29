@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>3つだけTODO</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <main class="app">
+    <h1>3つだけTODO</h1>
+
+    <!-- 入力フォーム -->
+    <form id="todo-form">
+      <input id="todo-input" type="text" placeholder="やることを入力" maxlength="50" required>
+      <button type="submit">追加</button>
+    </form>
+
+    <!-- 件数表示（例: 1 / 3） -->
+    <p id="count"></p>
+
+    <!-- メッセージ表示（3件を超えたときなど） -->
+    <p id="message"></p>
+
+    <!-- TODO一覧 -->
+    <ul id="todo-list"></ul>
+  </main>
+
+  <script src="script.js"></script>
+</body>
+</html>
