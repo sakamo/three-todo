@@ -10,7 +10,16 @@ const list = document.getElementById("todo-list");
 
 // TODOのデータ（例: [{ text: "買い物", done: false }]）
 // ブラウザに保存しておき、再読み込みしても消えないようにする
-let todos = JSON.parse(localStorage.getItem("todos")) || [];
+// 保存データが壊れていても、アプリが止まらないようにする
+function load() {
+  try {
+    const saved = JSON.parse(localStorage.getItem("todos"));
+    return Array.isArray(saved) ? saved.slice(0, MAX_TODOS) : [];
+  } catch (e) {
+    return [];
+  }
+}
+let todos = load();
 
 // データを保存する
 function save() {
