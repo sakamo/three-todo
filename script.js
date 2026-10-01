@@ -5,7 +5,8 @@ const MAX_TODOS = 3;
 const form = document.getElementById("todo-form");
 const input = document.getElementById("todo-input");
 const count = document.getElementById("count");
-const message = document.getElementById("message");
+const progress = document.getElementById("progress");
+const message =document.getElementById("message");
 const list = document.getElementById("todo-list");
 
 // TODOのデータ（例: [{ text: "買い物", done: false }]）
@@ -32,6 +33,12 @@ function render() {
 
   // 件数を表示（例: 2 / 3）
   count.textContent = todos.length + " / " + MAX_TODOS;
+
+  // 完了チェックが付いているTODOの件数を数えて表示
+  const doneCount = todos.filter(function (todo) {
+    return todo.done;
+  }).length;
+  progress.textContent = "今日の達成状況：" + doneCount + " / " + MAX_TODOS + "件完了";
 
   todos.forEach(function (todo, index) {
     const li = document.createElement("li");
