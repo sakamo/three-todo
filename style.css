@@ -83,6 +83,24 @@ button:active {
   border-radius: 10px;
 }
 
+/* 3件すべて完了したときのお祝い表示 */
+#complete-message {
+  margin: 12px 0 0;
+  padding: 16px;
+  text-align: center;
+  font-size: 22px;
+  font-weight: bold;
+  color: #92400e;
+  background: #fef3c7;
+  border: 2px solid #fcd34d;
+  border-radius: 10px;
+}
+
+/* hidden属性を確実に効かせる */
+[hidden] {
+  display: none;
+}
+
 #message {
   min-height: 1.5em;
   margin: 8px 0;
