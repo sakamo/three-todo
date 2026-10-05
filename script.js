@@ -103,5 +103,14 @@ form.addEventListener("submit", function (event) {
   render();
 });
 
+// 今日の日付を「2026年10月5日（月）」の形式で表示
+function showToday() {
+  const now = new Date();
+  const weekdays = ["日", "月", "火", "水", "木", "金", "土"];
+  document.getElementById("today").textContent =
+    now.getFullYear() + "年" + (now.getMonth() + 1) + "月" + now.getDate() + "日（" + weekdays[now.getDay()] + "）";
+}
+
 // 最初の表示
+showToday();
 render();
