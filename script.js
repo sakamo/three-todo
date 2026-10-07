@@ -13,8 +13,18 @@ const list = document.getElementById("todo-list");
 // TODOのデータ（例: [{ text: "買い物", done: false }]）
 // ブラウザに保存しておき、再読み込みしても消えないようにする
 // 保存データが壊れていても、アプリが止まらないようにする
+// 今日の日付を「2026-10-7」の形式の文字列で返す（保存と比較に使う）
+function todayKey() {
+  const now = new Date();
+  return now.getFullYear() + "-" + (now.getMonth() + 1) + "-" + now.getDate();
+}
+
 function load() {
   try {
+    // 保存した日付が今日と違うなら、新しい1日として空で始める
+    if (localStorage.getItem("todosDate") !== todayKey()) {
+      return [];
+    }
     const saved = JSON.parse(localStorage.getItem("todos"));
     return Array.isArray(saved) ? saved.slice(0, MAX_TODOS) : [];
   } catch (e) {
@@ -26,6 +36,7 @@ let todos = load();
 // データを保存する
 function save() {
   localStorage.setItem("todos", JSON.stringify(todos));
+  localStorage.setItem("todosDate", todayKey()); // 保存した日付も記録
 }
 
 // 画面を作り直す
