@@ -39,6 +39,22 @@ function save() {
   localStorage.setItem("todosDate", todayKey()); // 保存した日付も記録
 }
 
+// 3件完了した日を履歴に保存する（例: {"2026-10-8": 3}）
+// 日付をキーにしているので、同じ日は上書きされるだけで重複しない
+function saveHistory() {
+  let history = {};
+  try {
+    const saved = JSON.parse(localStorage.getItem("history"));
+    if (saved && typeof saved === "object" && !Array.isArray(saved)) {
+      history = saved;
+    }
+  } catch (e) {
+    history = {};
+  }
+  history[todayKey()] = MAX_TODOS;
+  localStorage.setItem("history", JSON.stringify(history));
+}
+
 // 画面を作り直す
 function render() {
   list.innerHTML = "";
@@ -69,6 +85,10 @@ function render() {
     checkbox.addEventListener("change", function () {
       todo.done = checkbox.checked;
       save();
+      // 3件すべて完了したら、今日の履歴を保存
+      if (todos.length === MAX_TODOS && todos.every(function (t) { return t.done; })) {
+        saveHistory();
+      }
       render();
     });
 
