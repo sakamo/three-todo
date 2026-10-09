@@ -55,6 +55,47 @@ function saveHistory() {
   localStorage.setItem("history", JSON.stringify(history));
 }
 
+// 履歴を読み込んで「2026年10月8日：3件完了」の形で一覧表示する（新しい日付が上）
+function renderHistory() {
+  const historyList = document.getElementById("history-list");
+  historyList.innerHTML = "";
+
+  let history = {};
+  try {
+    const saved = JSON.parse(localStorage.getItem("history"));
+    if (saved && typeof saved === "object" && !Array.isArray(saved)) {
+      history = saved;
+    }
+  } catch (e) {
+    history = {};
+  }
+
+  // "2026-10-8" を [2026, 10, 8] に直して、新しい順に並べる
+  const dates = Object.keys(history)
+    .map(function (key) {
+      return { key: key, parts: key.split("-").map(Number) };
+    })
+    .filter(function (d) {
+      return d.parts.length === 3 && d.parts.every(Number.isFinite);
+    })
+    .sort(function (a, b) {
+      return b.parts[0] - a.parts[0] || b.parts[1] - a.parts[1] || b.parts[2] - a.parts[2];
+    });
+
+  if (dates.length === 0) {
+    const li = document.createElement("li");
+    li.textContent = "まだ履歴はありません";
+    historyList.appendChild(li);
+    return;
+  }
+
+  dates.forEach(function (d) {
+    const li = document.createElement("li");
+    li.textContent = d.parts[0] + "年" + d.parts[1] + "月" + d.parts[2] + "日：" + history[d.key] + "件完了";
+    historyList.appendChild(li);
+  });
+}
+
 // 画面を作り直す
 function render() {
   list.innerHTML = "";
@@ -88,6 +129,7 @@ function render() {
       // 3件すべて完了したら、今日の履歴を保存
       if (todos.length === MAX_TODOS && todos.every(function (t) { return t.done; })) {
         saveHistory();
+        renderHistory(); // 履歴表示にもすぐ反映
       }
       render();
     });
@@ -145,3 +187,4 @@ function showToday() {
 // 最初の表示
 showToday();
 render();
+renderHistory();
