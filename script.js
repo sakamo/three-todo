@@ -85,6 +85,17 @@ function renderHistory() {
   // 履歴の日付の数 = 達成日数
   document.getElementById("achievement-days").textContent = "達成日数：" + dates.length + "日";
 
+  // 今日から1日ずつ過去にさかのぼり、3件完了の日が続く間だけ数える
+  let streak = 0;
+  const day = new Date();
+  while (true) {
+    const key = day.getFullYear() + "-" + (day.getMonth() + 1) + "-" + day.getDate();
+    if (history[key] !== MAX_TODOS) break;
+    streak++;
+    day.setDate(day.getDate() - 1);
+  }
+  document.getElementById("streak-days").textContent = "連続達成日数：" + streak + "日";
+
   if (dates.length === 0) {
     const li = document.createElement("li");
     li.textContent = "まだ履歴はありません";
