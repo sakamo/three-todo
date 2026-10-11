@@ -82,6 +82,9 @@ function renderHistory() {
       return b.parts[0] - a.parts[0] || b.parts[1] - a.parts[1] || b.parts[2] - a.parts[2];
     });
 
+  // 履歴の日付の数 = 達成日数
+  document.getElementById("achievement-days").textContent = "達成日数：" + dates.length + "日";
+
   if (dates.length === 0) {
     const li = document.createElement("li");
     li.textContent = "まだ履歴はありません";
