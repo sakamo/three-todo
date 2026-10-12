@@ -96,6 +96,16 @@ function renderHistory() {
   }
   document.getElementById("streak-days").textContent = "連続達成日数：" + streak + "日";
 
+  // 今日を含む直近7日間のうち、3件完了の日を数える
+  let weekCount = 0;
+  const weekDay = new Date();
+  for (let i = 0; i < 7; i++) {
+    const key = weekDay.getFullYear() + "-" + (weekDay.getMonth() + 1) + "-" + weekDay.getDate();
+    if (history[key] === MAX_TODOS) weekCount++;
+    weekDay.setDate(weekDay.getDate() - 1);
+  }
+  document.getElementById("week-days").textContent = "直近7日間：" + weekCount + " / 7日達成";
+
   if (dates.length === 0) {
     const li = document.createElement("li");
     li.textContent = "まだ履歴はありません";
