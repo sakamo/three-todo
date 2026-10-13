@@ -106,6 +106,10 @@ function renderHistory() {
   }
   document.getElementById("week-days").textContent = "直近7日間：" + weekCount + " / 7日達成";
 
+  // 直近7日間の達成数（weekCount）を再利用して、達成率（%）を整数に丸めて表示
+  const weekRate = Math.round((weekCount / 7) * 100);
+  document.getElementById("week-rate").textContent = "達成率：" + weekRate + "%";
+
   if (dates.length === 0) {
     const li = document.createElement("li");
     li.textContent = "まだ履歴はありません";
