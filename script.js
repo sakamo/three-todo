@@ -109,6 +109,9 @@ function renderHistory() {
   // 直近7日間の達成数（weekCount）を再利用して、達成率（%）を整数に丸めて表示
   const weekRate = Math.round((weekCount / 7) * 100);
   document.getElementById("week-rate").textContent = "達成率：" + weekRate + "%";
+  // 同じ weekRate を、プログレスバーの幅（%）にも使う
+  document.getElementById("week-rate-bar").style.width = weekRate + "%";
+  document.getElementById("week-rate-bar").parentElement.setAttribute("aria-valuenow", weekRate);
 
   if (dates.length === 0) {
     const li = document.createElement("li");
