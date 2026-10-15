@@ -225,6 +225,35 @@ button:active {
   border-bottom: 1px solid #e5e7eb;
 }
 
+/* 直近7日間の日ごとの○ / ×（狭い画面では折り返す） */
+#week-list {
+  list-style: none;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+  padding: 0;
+  margin: 0 0 16px;
+}
+
+#week-list li {
+  flex: 1 1 0;
+  min-width: 40px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 6px 2px;
+  font-size: 13px;
+  color: #64748b;
+  background: #f1f5f9;
+  border-radius: 6px;
+}
+
+#week-list li.done {
+  color: #15803d;
+  background: #dcfce7;
+  font-weight: bold;
+}
+
 /* 達成率のプログレスバー */
 .rate-bar {
   width: 100%;

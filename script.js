@@ -97,13 +97,32 @@ function renderHistory() {
   document.getElementById("streak-days").textContent = "連続達成日数：" + streak + "日";
 
   // 今日を含む直近7日間のうち、3件完了の日を数える
+  // 同じループで、日ごとの「日付ラベル」と「達成したか」も記録する（古い日が左になるよう先頭に追加）
   let weekCount = 0;
   const weekDay = new Date();
+  const weekDays = [];
   for (let i = 0; i < 7; i++) {
     const key = weekDay.getFullYear() + "-" + (weekDay.getMonth() + 1) + "-" + weekDay.getDate();
-    if (history[key] === MAX_TODOS) weekCount++;
+    const achieved = history[key] === MAX_TODOS;
+    if (achieved) weekCount++;
+    weekDays.unshift({ label: (weekDay.getMonth() + 1) + "/" + weekDay.getDate(), achieved: achieved });
     weekDay.setDate(weekDay.getDate() - 1);
   }
+
+  // 7日分を「10/9 ○」の形で横並びに表示
+  const weekList = document.getElementById("week-list");
+  weekList.innerHTML = "";
+  weekDays.forEach(function (d) {
+    const li = document.createElement("li");
+    li.className = d.achieved ? "done" : "";
+    const date = document.createElement("span");
+    date.textContent = d.label;
+    const mark = document.createElement("span");
+    mark.textContent = d.achieved ? "○" : "×";
+    li.appendChild(date);
+    li.appendChild(mark);
+    weekList.appendChild(li);
+  });
   document.getElementById("week-days").textContent = "直近7日間：" + weekCount + " / 7日達成";
 
   // 直近7日間の達成数（weekCount）を再利用して、達成率（%）を整数に丸めて表示
