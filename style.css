@@ -254,6 +254,33 @@ button:active {
   font-weight: bold;
 }
 
+/* 今日だけ枠線と太字で目立たせる */
+#week-list li.today {
+  border: 2px solid #2563eb;
+  font-weight: bold;
+}
+
+/* 曜日は広い画面では日付の横、狭い画面では下の行 */
+#week-list .weekday {
+  display: inline;
+}
+
+@media (max-width: 480px) {
+  #week-list {
+    gap: 4px;
+  }
+
+  #week-list li {
+    min-width: 0;
+    font-size: 12px;
+    text-align: center;
+  }
+
+  #week-list .weekday {
+    display: block;
+  }
+}
+
 /* 達成率のプログレスバー */
 .rate-bar {
   width: 100%;

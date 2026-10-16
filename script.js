@@ -105,18 +105,23 @@ function renderHistory() {
     const key = weekDay.getFullYear() + "-" + (weekDay.getMonth() + 1) + "-" + weekDay.getDate();
     const achieved = history[key] === MAX_TODOS;
     if (achieved) weekCount++;
-    weekDays.unshift({ label: (weekDay.getMonth() + 1) + "/" + weekDay.getDate(), achieved: achieved });
+    weekDays.unshift({ label: (weekDay.getMonth() + 1) + "/" + weekDay.getDate(), weekday: "(" + "日月火水木金土"[weekDay.getDay()] + ")", achieved: achieved, isToday: i === 0 });
     weekDay.setDate(weekDay.getDate() - 1);
   }
 
-  // 7日分を「10/9 ○」の形で横並びに表示
+  // 7日分を「10/9(金) ○」の形で横並びに表示
   const weekList = document.getElementById("week-list");
   weekList.innerHTML = "";
   weekDays.forEach(function (d) {
     const li = document.createElement("li");
-    li.className = d.achieved ? "done" : "";
+    li.className = (d.achieved ? "done" : "") + (d.isToday ? " today" : "");
     const date = document.createElement("span");
     date.textContent = d.label;
+    // 曜日は別のspanにして、狭い画面では下の行に折り返す
+    const wd = document.createElement("span");
+    wd.className = "weekday";
+    wd.textContent = d.weekday;
+    date.appendChild(wd);
     const mark = document.createElement("span");
     mark.textContent = d.achieved ? "○" : "×";
     li.appendChild(date);
