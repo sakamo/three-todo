@@ -137,6 +137,19 @@ function renderHistory() {
   document.getElementById("week-rate-bar").style.width = weekRate + "%";
   document.getElementById("week-rate-bar").parentElement.setAttribute("aria-valuenow", weekRate);
 
+  // 同じ weekCount を使って、達成傾向のひとことを切り替える
+  let weekMessage;
+  if (weekCount === 7) {
+    weekMessage = "7日間コンプリート！🎉";
+  } else if (weekCount >= 5) {
+    weekMessage = "かなり順調です！";
+  } else if (weekCount >= 3) {
+    weekMessage = "いいペースです！";
+  } else {
+    weekMessage = "まずは1日ずつ積み上げよう";
+  }
+  document.getElementById("week-message").textContent = weekMessage;
+
   if (dates.length === 0) {
     const li = document.createElement("li");
     li.textContent = "まだ履歴はありません";

@@ -281,6 +281,14 @@ button:active {
   }
 }
 
+/* 直近7日間の達成傾向メッセージ（長い文は折り返す） */
+#week-message {
+  margin: 0 0 12px;
+  font-weight: bold;
+  color: #166534;
+  overflow-wrap: anywhere;
+}
+
 /* 達成率のプログレスバー */
 .rate-bar {
   width: 100%;
