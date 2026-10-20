@@ -96,6 +96,25 @@ function renderHistory() {
   }
   document.getElementById("streak-days").textContent = "連続達成日数：" + streak + "日";
 
+  // 最高連続達成日数：古い日から順に見て、前の日の翌日なら連続+1、飛んでいたら1に戻す
+  // 日付を「1970年からの日数」に直して比べる（月またぎ・年またぎも正しく判定できる）
+  let bestStreak = 0;
+  let run = 0;
+  let prevDayNumber = null;
+  for (let i = dates.length - 1; i >= 0; i--) {
+    if (history[dates[i].key] !== MAX_TODOS) {
+      run = 0;
+      prevDayNumber = null;
+      continue;
+    }
+    const p = dates[i].parts;
+    const dayNumber = Math.round(Date.UTC(p[0], p[1] - 1, p[2]) / 86400000);
+    run = dayNumber - prevDayNumber === 1 ? run + 1 : 1;
+    prevDayNumber = dayNumber;
+    if (run > bestStreak) bestStreak = run;
+  }
+  document.getElementById("best-streak-days").textContent = "最高連続達成日数：" + bestStreak + "日";
+
   // 今日を含む直近7日間のうち、3件完了の日を数える
   // 同じループで、日ごとの「日付ラベル」と「達成したか」も記録する（古い日が左になるよう先頭に追加）
   let weekCount = 0;
