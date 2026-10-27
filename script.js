@@ -85,6 +85,15 @@ function renderHistory() {
   // 履歴の日付の数 = 達成日数
   document.getElementById("achievement-days").textContent = "達成日数：" + dates.length + "日";
 
+  // 今月の達成日数：履歴の「年」「月」が現在と同じ、3件完了の日だけを数える
+  const nowMonth = new Date();
+  const thisYear = nowMonth.getFullYear();
+  const thisMonth = nowMonth.getMonth() + 1;
+  const monthCount = dates.filter(function (d) {
+    return d.parts[0] === thisYear && d.parts[1] === thisMonth && history[d.key] === MAX_TODOS;
+  }).length;
+  document.getElementById("month-days").textContent = thisYear + "年" + thisMonth + "月：" + monthCount + "日達成";
+
   // 今日から1日ずつ過去にさかのぼり、3件完了の日が続く間だけ数える
   let streak = 0;
   const day = new Date();
