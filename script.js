@@ -94,6 +94,10 @@ function renderHistory() {
   }).length;
   document.getElementById("month-days").textContent = thisYear + "年" + thisMonth + "月：" + monthCount + "日達成";
 
+  // 月間達成率：今月の達成日数 ÷ 今日の日付（今月の何日目か）× 100 を整数に丸める
+  const monthRate = Math.round(monthCount / nowMonth.getDate() * 100);
+  document.getElementById("month-rate").textContent = "月間達成率：" + monthRate + "%";
+
   // 今日から1日ずつ過去にさかのぼり、3件完了の日が続く間だけ数える
   let streak = 0;
   const day = new Date();
